@@ -1,0 +1,6 @@
+{
+  "name": "سیستم مدیریت ناوگان",
+  "description": "سامانه هوشمند پایش، دیسپچینگ و مدیریت ناوگان جاده‌ای با مرکز کنترل ماهواره‌ای زنده و حالت تاریک و روشن.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
