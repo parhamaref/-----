@@ -12,6 +12,7 @@ import MapArea from './components/MapArea';
 import VehiclesPanel from './components/VehiclesPanel';
 import ReportsPanel from './components/ReportsPanel';
 import UsersPanel from './components/UsersPanel';
+import SatelliteDeck from './components/SatelliteDeck';
 import { Radio, AlertCircle, Compass, ShieldCheck } from 'lucide-react';
 import { convertToPersianNumbers } from './utils/jalali';
 
@@ -130,27 +131,27 @@ export default function App() {
       <main className="flex-1 pt-20 pb-12 px-6 flex flex-col justify-start">
         
         {activeTab === 'live-tracking' && (
-          <div className="flex flex-col h-[calc(100vh-140px)] gap-4">
+          <div className="flex flex-col min-h-[calc(100vh-160px)] gap-5 pb-12">
             
             {/* Title bar */}
             <div className="flex items-center justify-between flex-shrink-0 text-right">
               <div className="flex items-center gap-3">
-                <span className="flex items-center gap-1 bg-emerald-100/60 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-400 text-[10px] font-bold px-2.5 py-1 rounded-full border border-emerald-250 border-emerald-200/50">
+                <span className="flex items-center gap-1 bg-emerald-100/60 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-400 text-[10px] font-bold px-2.5 py-1 rounded-full border border-emerald-200/50">
                   <Radio className="w-3.5 h-3.5 animate-pulse text-emerald-500" />
                   بروزرسانی زنده فعال
                 </span>
                 <span className="hidden sm:inline-block bg-primary-100/50 dark:bg-primary-950/20 text-primary-700 dark:text-primary-400 text-[10px] font-bold px-2.5 py-1 rounded-full border border-primary-200/50 dark:border-primary-900/50">
-                  مرکز مانیتورینگ استان گلستان
+                  مرکز فرماندهی پیشرفته
                 </span>
               </div>
               <h1 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                ردیابی زنده ناوگان ترانزیتی
+                مرکز دیسپچ و ردیابی لحظه‌ای ماهواره‌ای ناوگان
                 <Compass className="w-5 h-5 text-primary-500" />
               </h1>
             </div>
 
             {/* Split layout: Selector list & interactive map */}
-            <div className="flex flex-col-reverse lg:flex-row gap-4 flex-1 min-h-0">
+            <div className="flex flex-col-reverse lg:flex-row gap-4 h-[580px] lg:h-[640px] flex-shrink-0">
               {/* Map rendering Panel */}
               <MapArea 
                 vehicles={vehicles} 
@@ -166,6 +167,9 @@ export default function App() {
                 onSelectVehicle={handleSelectVehicle}
               />
             </div>
+
+            {/* Satellite Signal intercept and telemetry deck */}
+            <SatelliteDeck selectedVehicle={selectedVehicle} />
           </div>
         )}
 
@@ -194,7 +198,7 @@ export default function App() {
 
       {/* Footer system status bar */}
       <footer className="fixed bottom-0 inset-x-0 h-9 bg-white/90 dark:bg-gray-950/90 backdrop-blur-md border-t border-gray-200/70 dark:border-gray-800/70 flex items-center justify-between px-6 z-30 select-none text-[10px] text-gray-400 dark:text-gray-500">
-        <span className="tracking-wide">سامانه پایش هوشمند ناوگان ترانزیتی استان گلستان · SaharaIOT</span>
+        <span className="tracking-wide">سامانه پایش هوشمند ناوگان ترانزیتی · jupintrace.ir</span>
         <div className="flex items-center gap-4">
           <span className="flex items-center gap-1">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 inline-block animate-pulse"></span>

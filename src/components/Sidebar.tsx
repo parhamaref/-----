@@ -286,7 +286,26 @@ export default function Sidebar({ companies, selectedVehicle, onSelectVehicle }:
                                   <div className="font-bold text-xs truncate text-gray-800 dark:text-gray-100">
                                     {v.name}
                                   </div>
-                                  <div className="text-[10px] text-gray-500 dark:text-gray-400 truncate flex items-center gap-1 mt-0.5 justify-end">
+                                  <div className="text-[10px] text-gray-500 dark:text-gray-400 truncate flex items-center gap-1.5 mt-0.5 justify-end flex-wrap">
+                                    {v.fuelIntegrity && v.fuelIntegrity.status !== 'safe' && (
+                                      <span className={`px-1 py-0.5 rounded text-[8.5px] font-bold inline-flex items-center gap-0.5 ${
+                                        v.fuelIntegrity.status === 'warning' 
+                                          ? 'bg-amber-100 dark:bg-amber-950/40 text-amber-600 dark:text-amber-450 border border-amber-500/20 animate-pulse'
+                                          : 'bg-red-100 dark:bg-red-950/40 text-red-650 dark:text-red-400 border border-red-500/20 animate-pulse'
+                                      }`} title={v.fuelIntegrity.logMessage}>
+                                        هشدار سوخت ⚠️
+                                      </span>
+                                    )}
+                                    {v.driverScore && (
+                                      <span className={`px-1 py-0.5 rounded text-[8.5px] font-bold inline-flex items-center gap-0.5 ${
+                                        v.driverScore.score >= 90 ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20' :
+                                        v.driverScore.score >= 80 ? 'bg-green-50 dark:bg-green-950/40 text-green-600 dark:text-green-400 border border-green-500/20' :
+                                        v.driverScore.score >= 65 ? 'bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 border border-amber-500/10' :
+                                        'bg-red-50 dark:bg-red-950/40 text-red-650 dark:text-red-400 border border-red-500/10'
+                                      }`} title={`ترمز شدید: ${convertToPersianNumbers(v.driverScore.harshBrakesCount.toString())} | شتاب ناگهانی: ${convertToPersianNumbers(v.driverScore.rapidAccelerationCount.toString())} | سرعت غیرمجاز: ${convertToPersianNumbers(v.driverScore.speedingEventsCount.toString())} | مصرف سوخت: ${convertToPersianNumbers(v.driverScore.fuelConsumptionRate.toString())}L | رفتار رانندگی: ${v.driverScore.behaviorGrade}`}>
+                                        امتیاز: {convertToPersianNumbers(v.driverScore.score.toString())}
+                                      </span>
+                                    )}
                                     <span>{v.driver}</span>
                                     {v.license && (
                                       <div className="relative inline-flex group/cert ml-0.5">

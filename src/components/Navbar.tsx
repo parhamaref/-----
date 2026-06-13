@@ -6,6 +6,7 @@
 import { useState } from 'react';
 import { ActiveTab } from '../types';
 import { getFormattedJalali, convertToPersianNumbers } from '../utils/jalali';
+import TriangleLogo from '../triangle-logo.svg';
 import { 
   Truck, 
   Map, 
@@ -45,17 +46,23 @@ export default function Navbar({ activeTab, setActiveTab, darkTheme, setDarkThem
       
       {/* Right Section: Brand Logo */}
       <div className="flex items-center gap-3">
-        <div className="md:hidden flex items-center p-1.5 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg text-gray-500 dark:text-gray-400">
-          <Truck className="w-5 h-5 text-primary-500" />
+        <div className="md:hidden flex items-center p-1.5 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg text-gray-500 dark:text-gray-400" onClick={() => setActiveTab('live-tracking')}>
+          <img src={TriangleLogo} className="w-6 h-6 object-contain" alt="armanJupin Icon" referrerPolicy="no-referrer" />
         </div>
-        <div className="flex items-center gap-2.5 cursor-pointer" onClick={() => setActiveTab('live-tracking')}>
-          <div className="h-10 w-10 bg-gradient-to-br from-primary-500 to-primary-700 rounded-xl flex items-center justify-center shadow-md shadow-primary-500/10">
-            <Truck className="h-5 w-5 text-white" />
+        <div className="flex items-center gap-2 cursor-pointer" onClick={() => setActiveTab('live-tracking')}>
+          {/* Standalone Impossible Triangle Brand Mark from Image */}
+          <div className="h-9 w-9 flex items-center justify-center">
+            <img src={TriangleLogo} className="h-8 w-8 object-contain transition-transform duration-300 hover:scale-110" alt="armanJupin Icon" referrerPolicy="no-referrer" />
           </div>
-          <div className="hidden sm:flex flex-col text-right">
-            <span className="font-bold text-sm tracking-tight bg-gradient-to-r from-primary-600 to-blue-600 dark:from-primary-400 dark:to-blue-400 bg-clip-text text-transparent">سامانه مدیریت ناوگان</span>
-            <span className="text-[9px] font-bold text-gray-400 dark:text-gray-500">پایش هوشمند لایو ردیاب‌ها</span>
+          {/* Stylized jupinarman Brand Typography */}
+          <div className="hidden sm:flex items-baseline font-sans select-none tracking-tight">
+            <span className="text-[20px] font-medium text-slate-800 dark:text-slate-100">jupin</span>
+            <span className="text-[20px] font-bold text-[#4fac9e] dark:text-[#5fcbc0]">arman</span>
           </div>
+          <span className="hidden md:inline-block h-4 w-px bg-gray-200 dark:bg-gray-800 mx-2"></span>
+          <span className="hidden md:inline-block text-[11px] font-bold text-gray-500 dark:text-gray-400 mt-0.5">
+            سامانه هوشمند مدیریت ناوگان
+          </span>
         </div>
       </div>
 

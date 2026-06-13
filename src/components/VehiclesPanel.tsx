@@ -99,6 +99,8 @@ export default function VehiclesPanel({ vehicles }: VehiclesPanelProps) {
                 <th className="px-4 py-3 font-semibold text-gray-500 dark:text-gray-400">وضعیت ردیاب</th>
                 <th className="px-4 py-3 font-semibold text-gray-500 dark:text-gray-400">نام دستگاه</th>
                 <th className="px-4 py-3 font-semibold text-gray-500 dark:text-gray-400">راننده فعال</th>
+                <th className="px-4 py-3 font-semibold text-gray-500 dark:text-gray-400">امتیاز عملکرد راننده (Driver Score)</th>
+                <th className="px-4 py-3 font-semibold text-gray-500 dark:text-gray-400">اصالت و تله‌متری سوخت (Fuel Integrity)</th>
                 <th className="px-4 py-3 font-semibold text-gray-500 dark:text-gray-400">کُد جواز صنف</th>
                 <th className="px-4 py-3 font-semibold text-gray-500 dark:text-gray-400">آخرین فرکانس مکان</th>
                 <th className="px-4 py-3 font-semibold text-gray-500 dark:text-gray-400">سلامت باطری</th>
@@ -123,6 +125,79 @@ export default function VehiclesPanel({ vehicles }: VehiclesPanelProps) {
                   </td>
                   <td className="px-4 py-3.5 font-bold text-gray-900 dark:text-white">{v.name}</td>
                   <td className="px-4 py-3.5 font-medium text-gray-700 dark:text-gray-300">{v.driver}</td>
+                  <td className="px-4 py-3.5">
+                    {v.driverScore ? (
+                      <div className="flex flex-col items-start gap-1 justify-end text-right">
+                        <div className="flex items-center gap-1.5">
+                          <span className={`px-2 py-0.5 rounded text-[10px] font-black ${
+                            v.driverScore.score >= 90 ? 'bg-emerald-100 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400' :
+                            v.driverScore.score >= 80 ? 'bg-green-100 dark:bg-green-950/40 text-green-700 dark:text-green-400' :
+                            v.driverScore.score >= 65 ? 'bg-amber-100 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400' :
+                            'bg-red-100 dark:bg-red-950/40 text-red-700 dark:text-red-400'
+                          }`}>
+                            {convertToPersianNumbers(v.driverScore.score.toString())} / ۱۰۰
+                          </span>
+                          <span className="text-[10px] text-gray-500 dark:text-gray-400 font-bold">({v.driverScore.behaviorGrade})</span>
+                        </div>
+                        <div className="text-[9.5px] text-gray-400 dark:text-gray-500 flex flex-wrap gap-x-2 gap-y-0.5 justify-start text-right" dir="rtl">
+                          <span>ترمز شدید: <strong className="text-gray-750 dark:text-gray-250 font-bold">{convertToPersianNumbers(v.driverScore.harshBrakesCount.toString())}</strong></span>
+                          <span>شتاب ناگهانی: <strong className="text-gray-750 dark:text-gray-250 font-bold">{convertToPersianNumbers(v.driverScore.rapidAccelerationCount.toString())}</strong></span>
+                          <span>سرعت غیرمجاز: <strong className="text-gray-750 dark:text-gray-250 font-bold">{convertToPersianNumbers(v.driverScore.speedingEventsCount.toString())}</strong></span>
+                          <span>مصرف: <strong className="text-gray-750 dark:text-gray-250 font-bold" dir="ltr">{convertToPersianNumbers(v.driverScore.fuelConsumptionRate.toString())} L/100km</strong></span>
+                        </div>
+                      </div>
+                    ) : (
+                      <span className="text-gray-300 dark:text-gray-700">—</span>
+                    )}
+                  </td>
+                  <td className="px-4 py-3.5">
+                    {v.fuelIntegrity ? (
+                      <div className="flex flex-col items-start gap-1 justify-end text-right min-w-[200px]" dir="rtl">
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          <span className={`px-2 py-0.5 rounded text-[10px] font-black ${
+                            v.fuelIntegrity.status === 'safe' ? 'bg-emerald-100 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400' :
+                            v.fuelIntegrity.status === 'warning' ? 'bg-amber-100 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 animate-pulse' :
+                            'bg-red-100 dark:bg-red-950/40 text-red-700 dark:text-red-400 animate-pulse'
+                          }`}>
+                            ظرفیت فعال: {convertToPersianNumbers(v.fuelIntegrity.integrityScore.toString())}٪
+                          </span>
+                          <span className="text-[10px] text-gray-500 dark:text-gray-450 font-medium">
+                            ({v.fuelIntegrity.status === 'safe' ? 'پروتکل امن باک' : v.fuelIntegrity.status === 'warning' ? 'نیازمند بازبینی' : 'خطر/احتمال سرقت سوخت'})
+                          </span>
+                        </div>
+
+                        {/* Diagnostics flags */}
+                        <div className="flex flex-wrap gap-1 mt-0.5">
+                          {v.fuelIntegrity.unauthorizedDropDetected && (
+                            <span className="bg-red-500/10 text-red-500 text-[8.5px] px-1.5 py-0.5 rounded font-black border border-red-500/20">تخلیه غیرمجاز سوخت 🚨</span>
+                          )}
+                          {v.fuelIntegrity.fuelSaleSuspected && (
+                            <span className="bg-amber-500/10 text-amber-500 text-[8.5px] px-1.5 py-0.5 rounded font-black border border-amber-500/25">فروش سوخت غیرمجاز ⛽</span>
+                          )}
+                          {v.fuelIntegrity.abnormalConsumptionDetected && (
+                            <span className="bg-orange-500/10 text-orange-500 text-[8.5px] px-1.5 py-0.5 rounded font-black border border-orange-500/20">مصرف غیرعادی 📉</span>
+                          )}
+                          {v.fuelIntegrity.tankTamperedDetected && (
+                            <span className="bg-red-500/10 text-red-500 text-[8.5px] px-1.5 py-0.5 rounded font-black border border-red-500/20">دستکاری فیزیکی باک ⚠️</span>
+                          )}
+                        </div>
+
+                        {/* Automated logic explanation */}
+                        <p className="text-[10.5px] text-gray-500 dark:text-gray-400 font-medium leading-tight mt-0.5 max-w-[280px]">
+                          {v.fuelIntegrity.logMessage}
+                        </p>
+
+                        <div className="text-[9px] text-gray-400 dark:text-gray-500 mt-0.5 font-medium">
+                          حجم ثبت شده: <strong className="font-mono text-gray-700 dark:text-gray-300">{convertToPersianNumbers(v.fuelIntegrity.lastCheckedVolume.toString())} لیتر</strong>
+                          {v.fuelIntegrity.stopDurationMinutes > 0 && (
+                            <span className="mr-2">توقف مشکوک: <strong className="font-mono text-gray-750 dark:text-gray-300">{convertToPersianNumbers(v.fuelIntegrity.stopDurationMinutes.toString())} دقیقه</strong></span>
+                          )}
+                        </div>
+                      </div>
+                    ) : (
+                      <span className="text-gray-300 dark:text-gray-750">—</span>
+                    )}
+                  </td>
                   <td className="px-4 py-3.5 font-mono text-gray-500 dark:text-gray-400">{convertToPersianNumbers(v.license)}</td>
                   <td className="px-4 py-3.5 font-mono text-gray-500 dark:text-gray-400 flex items-center gap-1 mt-1 justify-end">
                     <span>{convertToPersianNumbers(v.lat.toFixed(3))} , {convertToPersianNumbers(v.lng.toFixed(3))}</span>

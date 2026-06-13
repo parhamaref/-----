@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" width="100%" height="100%">
+  <!-- Impossible Triangle on the left -->
+  <g transform="translate(10, 5) scale(0.85)">
+    <polygon points="50,65 38,44 62,44" fill="#2d3e42" id="triangle-center" />
+    <path d="M46.5,8 L13,67.5 C12,69.5 13,71.5 15,72 L23.5,72 L49.5,23.5 L58,38.5 L65.5,34 L49.5,6 C48.5,4.5 47.5,5.5 46.5,8 Z" fill="#2d3e42" id="triangle-left" />
+    <path d="M53.5,8 L87,67.5 C88,69.5 87,71.5 85,72 L76.5,72 L50.5,23.5 L42,38.5 L34.5,34 L50.5,6 C51.5,4.5 52.5,5.5 53.5,8 Z" fill="#2c3b3e" id="triangle-right" />
+    <path d="M21,78 L79,78 C81,78 82,76.5 81.5,74.5 L78.5,69 L21.5,69 L18.5,74.5 C18,76.5 19,78 21,78 Z" fill="#222f32" id="triangle-bottom" />
+  </g>
+  
+  <!-- "arman" text -->
+  <text x="105" y="52" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="34" font-weight="500" fill="#2d3e42" letter-spacing="-1">arman</text>
+  
+  <!-- "J" text -->
+  <text x="210" y="54" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="36" font-weight="800" fill="#233134">J</text>
+  
+  <!-- "upin" text -->
+  <text x="228" y="52" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="34" font-weight="700" fill="#4fac9e" letter-spacing="-0.5">upin</text>
+</svg>

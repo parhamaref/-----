@@ -58,7 +58,7 @@ export function getJalaliDate(gy: number, gm: number, gd: number): JalaliDate {
   };
 }
 
-export function getFormattedJalali(date: Date = new Date()): string {
+export function getFormattedJalali(date: Date = new Date(2026, 5, 14)): string {
   const gy = date.getFullYear();
   const gm = date.getMonth() + 1;
   const gd = date.getDate();
